@@ -1,1 +1,40 @@
 This subfolder contains R scripts and Python code related to the manuscript.
+
+1. For the Fallopian tube analysis, the following code was used:
+
+	A. PoissonFit_histograms.py: This code generates the histograms for the Poisson distribution taking a maximum number of divisions (upper) as reference. The fit of this distribution is visualized at different clonal size values. Input: csv file with clonal expansion data (Model, size, divisions).
+  
+	B. Cutoff_Poisson_distribution.py: This code allow the statistical testing of clonal size thresholds under a Poisson distribution. A Poisson distribution is generated from the clonal size data using the threshold with best fit in A. Its significance is evaluated against a null distribution (permutation over 1000 random simulations) using a Kolmogorov–Smirnov (KS) test. Subsequently, the threshold is confirmed with a KS-test of the cumulative distribution function against an ideal Poisson distribution using the Poisson_2kstest.py code. Input: csv file with clonal expansion data (Model, size, divisions).
+  
+	C. Poisson_Fisher_test.py: This code generates a contingency table for clonal expansion taking the threshold stabilized on B. Once the table is generated, over proliferative clones are identified as outliers (difference between observed and expected clones) and their significance is confirmed with a Fisher exact test. Input: csv file with clonal expansion data (Model, size, divisions).
+  
+	D. Over_proliferative_graph.R: The over-proliferative clones over the tested time are plotted using this code. Differences and significance are tested using a t-test. Input: csv file with over-proliferation data (month, model,over-proliferative-clones (opc)).
+  
+
+2. For performing the differential expression analysis, the following code was used:
+
+	A. DeSeq2_analysis.R: The differential expression analysis is run with this code to identify over-down regulated genes between small and large clones. Input: csv file with TPM data (ensgene, entrez, symbol, chr, ...) for all the samples and metadata table (sample, condition, type). Equivalent scripts for the GEO data analysis are found in this folder (DESeq2_GSE135590.R and DESeq2_GSE135590_DEGs_mapped.R).
+  
+	B. heatmap_DEGs.R: This code generates the heatmap for the differential expressed genes identified in A. Significant differences in expression can be visualized between small and large clones. Input: csv file with the DeSeq2 output data (genes, baseMean, log2FoldChange, ..., pads).
+  
+	C. biomarRt.R: Since mice samples were initially analyzed, a conversion of the data to human homologs has to be done before running a pathways analysis. This codes allows this conversion. Input: csv file with the DeSeq2 output data (genes, baseMean, log2FoldChange, ..., pads).
+  
+	D. GSEA_mapping_hGenes.py: Once the homolog human genes have been obtained for the genes, the expression data is re-mapped for these genes using this code. This data would be used for the pathway analysis. Input: xlsx file with filtered homologs genes file (external_gene_name, hsapiens_homolog_associated_gene_name) and xlsx file with with the DeSeq2 output data (genes, baseMean,log2FoldChange, ..., pads).
+  
+	E. gsea_analysis.R: This code performs a pathways enrichment analysis to identify relevant up-down regulated biological processes between small and large clones. Input: csv file with the human homologs genes mapped to the differentially expressed data obtained in A (external_gene_name, hsapiens_homolog_associated_gene_name, log2FoldChange, padj).
+  
+	F. PCA_mapping_TPMs_GSE135590_DEGS.py: This code maps the list of genes used in this study against the GEOSE135590 dataset. Gene expression data was analyzed from these two sources to perform PCA analysis. Input: xlsx file with TPMs for all genes in GSE135590 (ensgene, symbol, FT1, ..., 13604T, ...) and differential expressed genes identified in this study 	(genes, baseMean, log2FoldChange, ..., pads).
+  
+	G. PCA.R: This code was used to do the PCA analysis between the data published in this paper and the previous published data available from GEOSE135590. Input: csv file with TPMs for 		all genes mapped between this study and the GSE135590 database (genes, baseMean, 18996-L, ..., 19313-L, FT1, ..., 13604T, ...). 		
+
+
+
+
+
+
+
+
+
+
+
+
